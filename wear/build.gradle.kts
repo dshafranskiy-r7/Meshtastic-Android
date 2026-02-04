@@ -31,7 +31,7 @@ configure<ApplicationExtension> {
     defaultConfig {
         applicationId = "com.geeksville.mesh.wear"
         
-        versionCode = 1
+        versionCode = System.getenv("VERSION_CODE")?.takeIf { it.isNotEmpty() }?.toIntOrNull() ?: 1
         versionName = configProperties.getProperty("VERSION_NAME_BASE")
         
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

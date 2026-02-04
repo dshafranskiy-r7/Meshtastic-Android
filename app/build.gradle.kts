@@ -61,8 +61,8 @@ configure<ApplicationExtension> {
         println("Version code offset: $vcOffset")
         versionCode =
             (
-                project.findProperty("android.injected.version.code")?.toString()?.toInt()
-                    ?: System.getenv("VERSION_CODE")?.toInt()
+                project.findProperty("android.injected.version.code")?.toString()?.toIntOrNull()
+                    ?: System.getenv("VERSION_CODE")?.takeIf { it.isNotEmpty() }?.toIntOrNull()
                     ?: (gitVersionProvider.get().toInt() + vcOffset)
                 )
         versionName =
