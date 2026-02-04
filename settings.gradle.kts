@@ -17,6 +17,7 @@
 
 include(
     ":app",
+    ":wear",
     ":core:analytics",
     ":core:api",
     ":core:common",
@@ -66,26 +67,6 @@ dependencyResolutionManagement {
             url = uri("https://jitpack.io")
             content {
                 includeGroupByRegex("com\\.github\\..*")
-            }
-        }
-    }
-}
-
-plugins {
-    id("org.gradle.toolchains.foojay-resolver") version "1.0.0"
-    id("com.gradle.develocity") version("4.3.2")
-    id("com.gradle.common-custom-user-data-gradle-plugin") version "2.4.0"
-}
-
-// Shared Develocity and Build Cache configuration
-apply(from = "gradle/develocity.settings.gradle")
-
-@Suppress("UnstableApiUsage")
-toolchainManagement {
-    jvm {
-        javaRepositories {
-            repository("foojay") {
-                resolverClass.set(org.gradle.toolchains.foojay.FoojayToolchainResolver::class.java)
             }
         }
     }

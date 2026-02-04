@@ -81,7 +81,7 @@
             android:name="com.google.android.wearable"
             android:required="true" />
 
-        <!-- Indicates that this app should be shown on Wear OS devices -->
+        <!-- Indicates this app can run standalone on watch (without phone) -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />

@@ -22,24 +22,36 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.Chip
+import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
+import androidx.wear.compose.material.items
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Main activity for Meshtastic Wear OS app
+ * Supports standalone mode (direct Bluetooth connection) and companion mode (phone sync)
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -56,6 +68,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WearApp() {
     MaterialTheme {
+        val navController = rememberSwipeDismissableNavController()
+        
         Scaffold(
             timeText = {
                 TimeText()
@@ -64,28 +78,141 @@ fun WearApp() {
                 Vignette(vignettePosition = VignettePosition.TopAndBottom)
             }
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+            WearNavHost(navController = navController)
+        }
+    }
+}
+
+@Composable
+fun WearNavHost(navController: NavHostController) {
+    SwipeDismissableNavHost(
+        navController = navController,
+        startDestination = "home"
+    ) {
+        composable("home") {
+            HomeScreen(navController = navController)
+        }
+        composable("messages") {
+            MessagesPlaceholderScreen()
+        }
+        composable("nodes") {
+            NodesPlaceholderScreen()
+        }
+    }
+}
+
+@Composable
+fun HomeScreen(navController: NavHostController) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+    ) {
+        ScalingLazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
                 Text(
                     text = "Meshtastic",
                     style = MaterialTheme.typography.title1,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.onBackground
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
                 )
+            }
+            
+            item {
+                Chip(
+                    onClick = { navController.navigate("messages") },
+                    label = {
+                        Text(
+                            text = "Messages",
+                            style = MaterialTheme.typography.button
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(0.9f),
+                    colors = ChipDefaults.primaryChipColors()
+                )
+            }
+            
+            item {
+                Chip(
+                    onClick = { navController.navigate("nodes") },
+                    label = {
+                        Text(
+                            text = "Nodes",
+                            style = MaterialTheme.typography.button
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(0.9f),
+                    colors = ChipDefaults.primaryChipColors()
+                )
+            }
+            
+            item {
                 Text(
-                    text = "Wear OS",
-                    style = MaterialTheme.typography.body1,
+                    text = "Standalone Mode",
+                    style = MaterialTheme.typography.caption3,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 16.dp)
                 )
             }
         }
     }
 }
+
+@Composable
+fun MessagesPlaceholderScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Messages",
+            style = MaterialTheme.typography.title2,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.onBackground
+        )
+        Text(
+            text = "Coming soon",
+            style = MaterialTheme.typography.body1,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.onBackground,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+    }
+}
+
+@Composable
+fun NodesPlaceholderScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Nodes",
+            style = MaterialTheme.typography.title2,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.onBackground
+        )
+        Text(
+            text = "Coming soon",
+            style = MaterialTheme.typography.body1,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.onBackground,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+    }
+}
+

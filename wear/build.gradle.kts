@@ -71,6 +71,10 @@ dependencies {
     implementation(projects.core.service)
     implementation(projects.core.strings)
 
+    // Feature modules - ONLY messaging and nodes for watch
+    implementation(projects.feature.messaging)
+    implementation(projects.feature.node)
+
     // Wear OS specific dependencies
     implementation(libs.androidx.wear)
     implementation(libs.androidx.wear.compose.material)
@@ -90,7 +94,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // Bluetooth
+    // Bluetooth - for standalone device pairing
     implementation(libs.nordic)
 
     // Other
