@@ -15,6 +15,8 @@ navigation3 = "1.0.0"
 paging = "3.4.0"
 room = "2.8.4"
 savedstate = "1.4.0"
+wear = "1.4.0"
+wearable = "18.2.0"
 
 # Kotlin
 kotlin = "2.3.0"
@@ -83,6 +85,14 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 androidx-savedstate-ktx = { module = "androidx.savedstate:savedstate-ktx", version.ref = "savedstate" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version = "2.11.1" }
+
+# Wear OS
+androidx-wear = { module = "androidx.wear:wear", version.ref = "wear" }
+androidx-wear-compose-material = { module = "androidx.wear.compose:compose-material", version.ref = "wear" }
+androidx-wear-compose-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wear" }
+androidx-wear-compose-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wear" }
+androidx-wear-remote-interactions = { module = "androidx.wear:wear-remote-interactions", version = "1.1.0" }
+play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "wearable" }
 
 # AndroidX Compose
 androidx-compose-bom = { module = "androidx.compose:compose-bom-alpha", version = "2026.01.01" }
