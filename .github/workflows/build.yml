@@ -14,12 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        module: [app, wear]
-        flavor: [google, fdroid]
-        exclude:
-          # Wear OS only needs one flavor for now
-          - module: wear
-            flavor: fdroid
+        module: [wear]
+        flavor: [google]
 
     env:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
