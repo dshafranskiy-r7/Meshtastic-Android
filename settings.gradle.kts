@@ -17,6 +17,7 @@
 
 include(
     ":app",
+    ":wear",
     ":core:api",
     ":core:barcode",
     ":core:ble",
